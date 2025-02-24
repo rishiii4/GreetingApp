@@ -57,5 +57,12 @@ public class GreetingController {
         String message = greetingService.getSimpleGreeting();
         return Map.of("message", message);
     }
+
+    // Greeting message with Name
+    @GetMapping("/name")
+    public Map<String, String> getGreetByNameService(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName) {
+        String msg = greetingService.getGreetingByName(firstName, lastName);
+        return Map.of("message", msg);
+    }
 }
 
