@@ -73,6 +73,7 @@ public class GreetingController {
     }
 
     // Save the Greeting Message in the Repository
+    // List all the Greeting Messages in the Repository
     @GetMapping("/all")
     public List<Greeting> getAllGreeting() {
         return greetingRepository.findAll();
