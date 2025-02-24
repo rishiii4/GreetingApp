@@ -51,5 +51,11 @@ public class GreetingController {
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
+
+    @GetMapping("/simple")
+    public Map<String, String> getSimpleService() {
+        String message = greetingService.getSimpleGreeting();
+        return Map.of("message", message);
+    }
 }
 
