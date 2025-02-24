@@ -4,6 +4,7 @@ import com.greetingapp.model.Greeting;
 import com.greetingapp.repository.GreetingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class GreetingService {
@@ -31,6 +32,11 @@ public class GreetingService {
         // Save the greeting repository
         greetingRepository.save(new Greeting(message));
         return message;
+
+
+    }
+    public Greeting findGreetingById(long id) {
+        return greetingRepository.findById(id).orElseThrow(() -> new RuntimeException("Greeting not found by id : "+ id));
     }
 
 }
