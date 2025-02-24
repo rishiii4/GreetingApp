@@ -1,16 +1,28 @@
 package com.greetingapp.greetingcontroller;
 
 
+import com.greetingapp.model.Greeting;
+import com.greetingapp.repository.GreetingRepository;
 import com.greetingapp.services.GreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
+
+    @Autowired
+    private GreetingRepository greetingRepository;
+    private final GreetingService greetingService;
+
+    @Autowired
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
 
     // GET request
     @GetMapping
@@ -45,13 +57,6 @@ public class GreetingController {
     }
 
     // Extend GreetingController to use Services Layer
-    private final GreetingService greetingService;
-
-    @Autowired
-    public GreetingController(GreetingService greetingService) {
-        this.greetingService = greetingService;
-    }
-
     @GetMapping("/simple")
     public Map<String, String> getSimpleService() {
         String message = greetingService.getSimpleGreeting();
@@ -64,5 +69,13 @@ public class GreetingController {
         String msg = greetingService.getGreetingByName(firstName, lastName);
         return Map.of("message", msg);
     }
+
+    // Save the Greeting Message in the Repository
+    @GetMapping("/all")
+    public List<Greeting> getAllGreeting() {
+        return greetingRepository.findAll();
+    }
+    
+
 }
 
