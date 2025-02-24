@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -49,6 +50,13 @@ public class GreetingService {
         Greeting greeting = greetingRepository.findById(id).orElseThrow(() -> new RuntimeException("Greeting not found by id : "+ id));
         greeting.setMessage(newMsg);
         return greetingRepository.save(greeting);
+    }
+
+    public void deleteGreeting(long id) {
+        if (!greetingRepository.existsById(id)) {
+            throw new NoSuchElementException("Greeting with ID " + id + " not found.");
+        }
+        greetingRepository.deleteById(id);
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/greeting")
@@ -98,6 +99,17 @@ public class GreetingController {
             return ResponseEntity.ok(greeting);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    // Delete a Greeting Messages in the Repository
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteGreet(@PathVariable long id) {
+        try {
+            greetingService.deleteGreeting(id);
+            return ResponseEntity.ok("Greeting with ID " + id + " has been deleted.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
