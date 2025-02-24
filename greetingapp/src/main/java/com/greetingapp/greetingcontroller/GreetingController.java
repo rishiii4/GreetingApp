@@ -90,5 +90,16 @@ public class GreetingController {
         }
     }
 
+    // Edit a Greeting Messages in the Repository
+    @PutMapping("/change/{id}")
+    public ResponseEntity<Greeting> updateGreeting(@PathVariable long id, @RequestBody Greeting updatedGreet) {
+        try {
+            Greeting greeting = greetingService.update(id, updatedGreet.getMessage());
+            return ResponseEntity.ok(greeting);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
 }
 
